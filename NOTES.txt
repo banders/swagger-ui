@@ -1,3 +1,30 @@
+Author: brock@bandersgeo.ca
+--------------------------------------------------------------------------------
+
+This branch is a fork core swagger-ui (3.x), with several customizations applied.
+
+Create a fresh build as follows:
+
+#refresh the core swagger-ui code
+- git fetch upstream
+- git checkout master
+- git merge upstream/master					(merge upstream/master into the current branch)
+
+#apply the customizations
+- git merge remove-header
+- git merge request-url
+- git merge gwa-integration
+
+#build as usual
+- npm run build
+
+#integrate with the CKAN API Console
+- copy the dist folder into API Console public folder here: C:\git_repos\banders\ckanext-openapi\ckanext\openapi\public\swagger-ui
+- rebuild and deploy the CKAN API Console
+
+
+--------------------------------------------------------------------------------
+
 The code in this branch addresses the following issue found in swagger-ui core:
 
 - HTML markup included in the response.{status_code}.description of an API 
