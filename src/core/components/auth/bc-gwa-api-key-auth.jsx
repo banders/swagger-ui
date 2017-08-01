@@ -24,8 +24,9 @@ export default class BcGwaApiKeyAuth extends React.Component {
       apiError: false
     }
     
-    this.fetchApiKey()
+    //this.fetchApiKey()
   }
+
   
   fetchApiKey() {
     let { authorizeState, authActions } = this.props
@@ -34,9 +35,11 @@ export default class BcGwaApiKeyAuth extends React.Component {
     })
     .then((response) => {
       if (response.status && response.status == 403) {
+
         this.setState({apiError: true})
       } else {
         let responseJson = response.json()
+        console.log(responseJson);
         let newState = Object.assign({}, this.state, { value: responseJson.key })
         authorizeState(newState)
       }
@@ -47,12 +50,39 @@ export default class BcGwaApiKeyAuth extends React.Component {
     })
   }
 
+/*
+   fetchApiKey() {
+     let { authorizeState, authActions } = this.props
+     fetch("https://gwa-d.apps.gov.bc.ca/rest/apiKeys", {
+       credentials: "include"
+     })
+     .then((response) => response.json())
+     .then((responseJson) => {
+       console.log(responseJson);
+       let newState = Object.assign({}, this.state, { value: responseJson.key })
+       console.log("calling authorizeState")
+       console.log(newState)
+       authorizeState(newState)
+     })
+     .catch((error) => {
+       console.log(error)
+       console.log("Dialog open - user not authenticated.")
+     })
+   }
+*/
+
+  componentWillMount() {
+    console.log("Mounting")
+    this.fetchApiKey()
+  }
+
   componentWillUnmount() {
     console.log("Unmounting")
     this.fetchApiKey()
   }
 
   render() {
+    console.log("render");
     let { schema, getComponent, errSelectors, specSelectors, name } = this.props
     let { apiError } = this.state
     const Input = getComponent("Input")
@@ -74,19 +104,19 @@ export default class BcGwaApiKeyAuth extends React.Component {
       height: "400px"
     }
 
-    if (!apiError) {
+//    if (!apiError) {
       return (
         <div>
           <iframe src="https://gwa-d.apps.gov.bc.ca/ui/apiKeys?contentOnly=true" style={iframeStyle} frameBorder="0" />
         </div>
       )
-    } else {
-      return (
-        <div>
-          <h4>Forbidden</h4>
-          <p>Please contact {contactName} to request that your github account be associated with the Github group 'bcgov'</p>
-        </div>
-      )
-    }
+//    } else {
+//      return (
+//        <div>
+//          <h4>Forbidden</h4>
+//          <p>Please contact {contactName} to request that your github account be associated with the Github group 'bcgov'</p>
+//        </div>
+//      )
+//    }
   }
 }
