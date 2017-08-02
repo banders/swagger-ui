@@ -14,12 +14,6 @@ export default class BcGwaApiKeyAuth extends React.Component {
 
   constructor(props, context) {
     super(props, context)
-    console.log("this.props")
-    console.log(this.props)
-    console.log("props")
-    console.log(props)
-    console.log("context")
-    console.log(context)
     let { name, schema } = this.props
     let value = ""
 
@@ -46,7 +40,6 @@ export default class BcGwaApiKeyAuth extends React.Component {
     this.setState(newState);
 
     submitAuth();
-
   }
 
   componentWillMount() {
@@ -58,7 +51,6 @@ export default class BcGwaApiKeyAuth extends React.Component {
   }
 
   render() {
-    console.log("render");
     let { schema, getComponent, errSelectors, specSelectors, name } = this.props
     let { apiError } = this.state
     const Input = getComponent("Input")
@@ -83,7 +75,7 @@ export default class BcGwaApiKeyAuth extends React.Component {
 
     return (
       <div>
-        <iframe src="https://gwa-d.apps.gov.bc.ca/ui/apiKeys?appName=API%20Console&appSendMessage=true&contentOnly=true" style={iframeStyle} frameBorder="0" />
+        <iframe src="https://gwa-t.apps.gov.bc.ca/ui/apiKeys?appName=API%20Console&appSendMessage=true&contentOnly=true" style={iframeStyle} frameBorder="0" />
       </div>
     )
 
