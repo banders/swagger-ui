@@ -40,6 +40,7 @@ export default class BcGwaApiKeyAuth extends React.Component {
     this.setState(newState);
 
     submitAuth();
+
   }
 
   componentWillMount() {
@@ -72,10 +73,9 @@ export default class BcGwaApiKeyAuth extends React.Component {
       height: "400px"
     }
 
-
     return (
       <div>
-        <iframe src="https://gwa-t.apps.gov.bc.ca/ui/apiKeys?appName=API%20Console&appSendMessage=true&contentOnly=true" style={iframeStyle} frameBorder="0" />
+        <iframe src="https://gwa.apps.gov.bc.ca/ui/apiKeys?appName=API%20Console&appSendMessage=true&contentOnly=true" style={iframeStyle} frameBorder="0" />
       </div>
     )
 
