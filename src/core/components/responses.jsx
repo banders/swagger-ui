@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react"
+import React from "react"
+import PropTypes from "prop-types"
 import { fromJS } from "immutable"
 import { defaultStatusCode } from "core/utils"
 
@@ -14,19 +15,22 @@ export default class Responses extends React.Component {
     specSelectors: PropTypes.object.isRequired,
     specActions: PropTypes.object.isRequired,
     pathMethod: PropTypes.array.isRequired,
-    fn: PropTypes.object.isRequired
+    displayRequestDuration: PropTypes.bool.isRequired,
+    fn: PropTypes.object.isRequired,
+    getConfigs: PropTypes.func.isRequired
   }
 
   static defaultProps = {
     request: null,
     tryItOutResponse: null,
-    produces: fromJS(["application/json"])
+    produces: fromJS(["application/json"]),
+    displayRequestDuration: false
   }
 
   onChangeProducesWrapper = ( val ) => this.props.specActions.changeProducesValue(this.props.pathMethod, val)
 
   render() {
-    let { responses, request, tryItOutResponse, getComponent, specSelectors, fn, producesValue } = this.props
+    let { responses, request, tryItOutResponse, getComponent, getConfigs, specSelectors, fn, producesValue, displayRequestDuration } = this.props
     let defaultCode = defaultStatusCode( responses )
 
     const ContentType = getComponent( "contentType" )
@@ -39,13 +43,13 @@ export default class Responses extends React.Component {
       <div className="responses-wrapper">
         <div className="opblock-section-header">
           <h4>Responses</h4>
-            <label>
+            { specSelectors.isOAS3() ? null : <label>
               <span>Response content type</span>
               <ContentType value={producesValue}
                          onChange={this.onChangeProducesWrapper}
                          contentTypes={produces}
                          className="execute-content-type"/>
-                     </label>
+                     </label> }
         </div>
         <div className="responses-inner">
           {
@@ -53,7 +57,11 @@ export default class Responses extends React.Component {
                               : <div>
                                   <LiveResponse request={ request }
                                                 response={ tryItOutResponse }
-                                                getComponent={ getComponent } />
+                                                getComponent={ getComponent }
+                                                getConfigs={ getConfigs }
+                                                specSelectors={ specSelectors }
+                                                pathMethod={ this.props.pathMethod }
+                                                displayRequestDuration={ displayRequestDuration } />
                                   <h4>Responses</h4>
                                 </div>
 
@@ -64,6 +72,7 @@ export default class Responses extends React.Component {
               <tr className="responses-header">
                 <td className="col col_header response-col_status">Code</td>
                 <td className="col col_header response-col_description">Description</td>
+                { specSelectors.isOAS3() ? <td className="col col_header response-col_links">Links</td> : null }
               </tr>
             </thead>
             <tbody>

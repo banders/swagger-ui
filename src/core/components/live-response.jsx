@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react"
+import React from "react"
+import PropTypes from "prop-types"
 import ImPropTypes from "react-immutable-proptypes"
 
 const Headers = ( { headers } )=>{
@@ -8,27 +9,45 @@ const Headers = ( { headers } )=>{
       <pre>{headers}</pre>
     </div>)
 }
-
 Headers.propTypes = {
   headers: PropTypes.array.isRequired
 }
 
+const Duration = ( { duration } ) => {
+  return (
+    <div>
+      <h5>Request duration</h5>
+      <pre>{duration} ms</pre>
+    </div>
+  )
+}
+Duration.propTypes = {
+  duration: PropTypes.number.isRequired
+}
+
+
 export default class LiveResponse extends React.Component {
   static propTypes = {
     response: PropTypes.object.isRequired,
-    getComponent: PropTypes.func.isRequired
+    specSelectors: PropTypes.object.isRequired,
+    pathMethod: PropTypes.object.isRequired,
+    getComponent: PropTypes.func.isRequired,
+    displayRequestDuration: PropTypes.bool.isRequired,
+    getConfigs: PropTypes.func.isRequired
   }
 
   render() {
-    const { request, response, getComponent } = this.props
+    const { response, getComponent, getConfigs, displayRequestDuration, specSelectors, pathMethod } = this.props
+    const { showMutatedRequest } = getConfigs()
 
-    const body = response.get("text")
+    const curlRequest = showMutatedRequest ? specSelectors.mutatedRequestFor(pathMethod[0], pathMethod[1]) : specSelectors.requestFor(pathMethod[0], pathMethod[1])
     const status = response.get("status")
     const url = response.get("url")
     const headers = response.get("headers").toJS()
     const notDocumented = response.get("notDocumented")
     const isError = response.get("error")
-
+    const body = response.get("text")
+    const duration = response.get("duration")
     const headersKeys = Object.keys(headers)
     const contentType = headers["content-type"]
 
@@ -37,10 +56,11 @@ export default class LiveResponse extends React.Component {
     const returnObject = headersKeys.map(key => {
       return <span className="headerline" key={key}> {key}: {headers[key]} </span>
     })
+    const hasHeaders = returnObject.length !== 0
 
     return (
       <div>
-        { request && <Curl request={ request }/> }
+        { curlRequest && <Curl request={ curlRequest }/> }
         <h4>Server response</h4>
         <table className="responses-table">
           <thead>
@@ -54,28 +74,32 @@ export default class LiveResponse extends React.Component {
               <td className="col response-col_status">
                 { status }
                 {
-                  !notDocumented ? null :
-                  <div className="response-undocumented">
-                    <i> Undocumented </i>
-                  </div>
+                  notDocumented ? <div className="response-undocumented">
+                                    <i> Undocumented </i>
+                                  </div>
+                                : null
                 }
               </td>
               <td className="col response-col_description">
                 {
-                  !isError ? null : <span>
-                    {`${response.get("name")}: ${response.get("message")}`}
-                  </span>
+                  isError ? <span>
+                              {`${response.get("name")}: ${response.get("message")}`}
+                            </span>
+                          : null
                 }
                 {
-                  !body || isError ? null
-                        : <ResponseBody content={ body }
-                                        contentType={ contentType }
-                                        url={ url }
-                                        headers={ headers }
-                                        getComponent={ getComponent }/>
+                  body ? <ResponseBody content={ body }
+                                       contentType={ contentType }
+                                       url={ url }
+                                       headers={ headers }
+                                       getComponent={ getComponent }/>
+                       : null
                 }
                 {
-                  !headers ? null : <Headers headers={ returnObject }/>
+                  hasHeaders ? <Headers headers={ returnObject }/> : null
+                }
+                {
+                  displayRequestDuration && duration ? <Duration duration={ duration } /> : null
                 }
               </td>
             </tr>

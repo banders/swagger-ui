@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react"
+import React from "react"
+import PropTypes from "prop-types"
 import ImPropTypes from "react-immutable-proptypes"
 
 export default class AuthorizeOperationBtn extends React.Component {
@@ -23,7 +24,7 @@ export default class AuthorizeOperationBtn extends React.Component {
     return (
       <button className={isAuthorized ? "authorization__btn locked" : "authorization__btn unlocked"} onClick={ this.onClick }>
         <svg width="20" height="20">
-          <use xlinkHref={ isAuthorized ? "#locked" : "#unlocked" } />
+          <use href={ isAuthorized ? "#locked" : "#unlocked" } xlinkHref={ isAuthorized ? "#locked" : "#unlocked" } />
         </svg>
       </button>
 
