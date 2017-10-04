@@ -29,18 +29,22 @@ class Parameters extends Component {
     tryItOutEnabled: PropTypes.bool,
     allowTryItOut: PropTypes.bool,
     onTryoutClick: PropTypes.func,
+    onTryExampleClick: PropTypes.func,
     onCancelClick: PropTypes.func,
     onChangeKey: PropTypes.array,
-    pathMethod: PropTypes.array.isRequired
+    pathMethod: PropTypes.array.isRequired,
+    tryExample: PropTypes.bool
   }
 
 
   static defaultProps = {
     onTryoutClick: Function.prototype,
+    onTryExampleClick: Function.prototype,
     onCancelClick: Function.prototype,
     tryItOutEnabled: false,
     allowTryItOut: true,
     onChangeKey: [],
+    tryExample: PropTypes.bool
   }
 
   onChange = ( param, value, isXml ) => {
@@ -79,6 +83,7 @@ class Parameters extends Component {
 
     let {
       onTryoutClick,
+      onTryExampleClick,
       onCancelClick,
       parameters,
       allowTryItOut,
@@ -90,11 +95,13 @@ class Parameters extends Component {
       oas3Actions,
       oas3Selectors,
       pathMethod,
-      operation
+      operation,
+      tryExample
     } = this.props
 
     const ParameterRow = getComponent("parameterRow")
     const TryItOutButton = getComponent("TryItOutButton")
+    const TryExampleButton = getComponent("TryExampleButton")
     const ContentType = getComponent("contentType")
     const Callbacks = getComponent("Callbacks", true)
     const RequestBody = getComponent("RequestBody", true)
@@ -119,7 +126,10 @@ class Parameters extends Component {
             }
           </div>
             { allowTryItOut ? (
-              <TryItOutButton enabled={ tryItOutEnabled } onCancelClick={ onCancelClick } onTryoutClick={ onTryoutClick } />
+              <div className="try-button-holders">
+                <TryItOutButton enabled={ tryItOutEnabled } onCancelClick={ onCancelClick } onTryoutClick={ onTryoutClick } />
+                <TryExampleButton enabled={ tryItOutEnabled } onCancelClick={ onCancelClick } onTryExampleClick={ onTryExampleClick } />
+              </div>
             ) : null }
         </div>
         {this.state.parametersVisible ? <div className="parameters-container">
@@ -143,7 +153,8 @@ class Parameters extends Component {
                         onChangeConsumes={this.onChangeConsumesWrapper}
                         specSelectors={ specSelectors }
                         pathMethod={ pathMethod }
-                        isExecute={ isExecute }/>
+                        isExecute={ isExecute }
+                        tryExample={ tryExample }/>
                     )).toArray()
                   }
                 </tbody>

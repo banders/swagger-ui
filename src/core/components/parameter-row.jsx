@@ -12,7 +12,7 @@ export default class ParameterRow extends Component {
     onChangeConsumes: PropTypes.func.isRequired,
     specSelectors: PropTypes.object.isRequired,
     pathMethod: PropTypes.array.isRequired,
-    getConfigs: PropTypes.func.isRequired
+    tryExample: PropTypes.bool
   }
 
   constructor(props, context) {
@@ -57,7 +57,7 @@ export default class ParameterRow extends Component {
   }
 
   render() {
-    let {param, onChange, getComponent, getConfigs, isExecute, fn, onChangeConsumes, specSelectors, pathMethod} = this.props
+    let {param, onChange, getComponent, isExecute, fn, onChangeConsumes, specSelectors, pathMethod, tryExample} = this.props
 
     let { isOAS3 } = specSelectors
 
@@ -86,9 +86,15 @@ export default class ParameterRow extends Component {
     let isFormData = inType === "formData"
     let isFormDataSupported = "FormData" in win
     let required = param.get("required")
-    let itemType = param.getIn(isOAS3 && isOAS3() ? ["schema", "items", "type"] : ["items", "type"])
-    let parameter = specSelectors.getParameter(pathMethod, param.get("name"), param.get("in"))
-    let value = parameter ? parameter.get("value") : ""
+    let itemType =  param.getIn(isOAS3 && isOAS3() ? ["schema", "items", "type"] : ["items", "type"])
+    let parameter = specSelectors.getParameter(pathMethod, param.get("name"))
+    let value
+
+    if (tryExample) {
+      value = schema ? schema.get("example") : ""
+    } else {
+      value = parameter ? parameter.get("value") : ""
+    }
 
     return (
       <tr>
