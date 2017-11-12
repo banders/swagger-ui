@@ -5,7 +5,6 @@ export default class GwaAuthorizationPopup extends React.Component {
   constructor(props, context) {
     super(props, context)
 
-    this.state = {}
   }
 
   close =() => {
@@ -14,23 +13,13 @@ export default class GwaAuthorizationPopup extends React.Component {
     authActions.showDefinitions(false)
   }
 
-  authorizeState =(auth) => {
-    let { authActions } = this.props
-    let { name } = auth
-    
-    let newState = { [name]: auth }
-    console.log(newState)
-    authActions.authorize(newState)
-  }
-
   submitAuth =(e) => {
     if (e){
       e.preventDefault()
     }
 
-    let { authActions, closePopupWindow } = this.props
-
-    authActions.authorize(this.state)
+    let { closePopupWindow } = this.props
+    
     closePopupWindow()
   }
 

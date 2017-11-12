@@ -14,16 +14,6 @@ export default class BcGwaApiKeyAuth extends React.Component {
 
   constructor(props, context) {
     super(props, context)
-    console.log(context)
-    let { name, schema } = this.props
-    let value = ""
-
-    this.state = {
-      name: name,
-      schema: schema,
-      value: value,
-      apiError: false
-    }
     
     //listen for GWA message
     window.addEventListener('message', this.gwaMessageCallback.bind(this));
@@ -34,13 +24,11 @@ export default class BcGwaApiKeyAuth extends React.Component {
   }
 
   setKey(key) {
-    let { authorizeState, submitAuth } = this.props
-    console.log("Obtained an API key: "+key);
-    let newState = Object.assign({}, this.state, { value: key })
-    authorizeState(newState)
-    this.setState(newState);
+    let { authActions, submitAuth } = this.props
 
-    submitAuth();
+    let apiKey = { apikey: { name: "apikey", schema: { type: "apiKey", in: "header", name: "apikey"}, value: key}}
+    authActions.authorize(apiKey)
+    submitAuth()
   }
 
   componentWillMount() {
@@ -53,7 +41,6 @@ export default class BcGwaApiKeyAuth extends React.Component {
 
   render() {
     let { schema, getComponent, errSelectors, specSelectors, name } = this.props
-    let { apiError } = this.state
     const Input = getComponent("Input")
     const Row = getComponent("Row")
     const Col = getComponent("Col")
