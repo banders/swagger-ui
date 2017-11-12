@@ -33,7 +33,6 @@ export default class ApiKeyAuth extends React.Component {
     let { onChange } = this.props
     let value = e.target.value
     let newState = Object.assign({}, this.state, { value: value })
-    console.log(newState)
 
     this.setState(newState)
     onChange(newState)
