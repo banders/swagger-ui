@@ -20,8 +20,6 @@ export default class GwaAuthorizeBtn extends React.Component {
 
   onClick =() => {
     let { authActions, authSelectors } = this.props
-    console.log("set state")
-
     this.setState({showGwaPopup: true})
   }
 
@@ -30,7 +28,6 @@ export default class GwaAuthorizeBtn extends React.Component {
     //must be moved out of button component
     const GwaAuthorizationPopup = getComponent("gwaAuthorizationPopup", true)
     let showGwaPopup = this.state.showGwaPopup
-    console.log(showGwaPopup)
     let isAuthorized = !!authSelectors.authorized().size
 
     return (
