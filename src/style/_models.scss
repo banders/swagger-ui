@@ -227,13 +227,18 @@ span
 {
     > span.model
     {
-        padding: 0 0 0 10px;
-
         .brace-close
         {
             padding: 0 0 0 10px;
         }
     }
+}
+
+.prop-name
+{
+    display: inline-block;
+    margin-right: 1em;
+    width: 8em;
 }
 
 .prop-type

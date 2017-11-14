@@ -29,7 +29,6 @@ export default class Auths extends React.Component {
     }
 
     let { authActions } = this.props
-
     authActions.authorize(this.state)
     authActions.showDefinitions(false)
   }
@@ -54,6 +53,7 @@ export default class Auths extends React.Component {
   }
 
   render() {
+
     let { definitions, getComponent, authSelectors, errSelectors, specSelectors } = this.props
     const ApiKeyAuth = getComponent("apiKeyAuth")
     const BasicAuth = getComponent("basicAuth")
@@ -75,6 +75,7 @@ export default class Auths extends React.Component {
           !!nonOauthDefinitions.size && <form onSubmit={ this.submitAuth }>
             {
               nonOauthDefinitions.map( (schema, name) => {
+
                 let type = schema.get("type")
                 let authEl
 
