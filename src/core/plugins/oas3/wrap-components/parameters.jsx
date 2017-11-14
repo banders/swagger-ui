@@ -22,6 +22,7 @@ class Parameters extends Component {
     specActions: PropTypes.object.isRequired,
     operation: PropTypes.object.isRequired,
     getComponent: PropTypes.func.isRequired,
+    getConfigs: PropTypes.func.isRequired,
     specSelectors: PropTypes.object.isRequired,
     oas3Actions: PropTypes.object.isRequired,
     oas3Selectors: PropTypes.object.isRequired,
@@ -91,6 +92,7 @@ class Parameters extends Component {
 
       fn,
       getComponent,
+      getConfigs,
       specSelectors,
       oas3Actions,
       oas3Selectors,
@@ -147,6 +149,7 @@ class Parameters extends Component {
                     eachMap(parameters, (parameter) => (
                       <ParameterRow fn={ fn }
                         getComponent={ getComponent }
+                        getConfigs={ getConfigs }
                         param={ parameter }
                         key={ parameter.get( "name" ) }
                         onChange={ this.onChange }
