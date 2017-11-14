@@ -24,10 +24,21 @@ export default class Auths extends React.Component {
   }
 
   submitAuth =(e) => {
-    e.preventDefault()
+    if (e){
+      e.preventDefault()
+    }
 
     let { authActions } = this.props
     authActions.authorize(this.state)
+    authActions.showDefinitions(false)
+  }
+  
+  authorizeState =(auth) => {
+    let { authActions } = this.props
+    let { name } = auth
+    
+    let newState = { [name]: auth }
+    authActions.authorize(newState)
   }
 
   logoutClick =(e) => {
@@ -42,8 +53,10 @@ export default class Auths extends React.Component {
   }
 
   render() {
-    let { definitions, getComponent, authSelectors, errSelectors } = this.props
-    const AuthItem = getComponent("AuthItem")
+
+    let { definitions, getComponent, authSelectors, errSelectors, specSelectors } = this.props
+    const ApiKeyAuth = getComponent("apiKeyAuth")
+    const BasicAuth = getComponent("basicAuth")
     const Oauth2 = getComponent("oauth2", true)
     const Button = getComponent("Button")
 
@@ -62,23 +75,57 @@ export default class Auths extends React.Component {
           !!nonOauthDefinitions.size && <form onSubmit={ this.submitAuth }>
             {
               nonOauthDefinitions.map( (schema, name) => {
-                return <AuthItem
-                  key={name}
-                  schema={schema}
-                  name={name}
-                  getComponent={getComponent}
-                  onAuthChange={this.onAuthChange}
-                  authorized={authorized}
-                  errSelectors={errSelectors}
-                  />
+
+                let type = schema.get("type")
+                let authEl
+
+                switch(type) {
+                  case "apiKey": authEl = <ApiKeyAuth key={ name }
+                                                    schema={ schema }
+                                                    name={ name }
+                                                    errSelectors={ errSelectors }
+                                                    specSelectors={ specSelectors }
+                                                    authorized={ authorized }
+                                                    getComponent={ getComponent }
+                                                    onChange={ this.onAuthChange } 
+                                                    authorizeState = { this.authorizeState } 
+                                                    submitAuth = {this.submitAuth} />
+                    break
+                  case "basic": authEl = <BasicAuth key={ name }
+                                                  schema={ schema }
+                                                  name={ name }
+                                                  errSelectors={ errSelectors }
+                                                  authorized={ authorized }
+                                                  getComponent={ getComponent }
+                                                  onChange={ this.onAuthChange } />
+                    break
+                  default: authEl = <div key={ name }>Unknown security definition type { type }</div>
+                }
+
+                let buttonBar
+                if (nonOauthDefinitions.size === authorizedAuth.size) {
+                  if (type == "apiKey") {
+                    buttonBar = <Button className="btn modal-btn auth" onClick={ this.logoutClick }>Unset API Key</Button> 
+                  }
+                  else {
+                    buttonBar = <Button className="btn modal-btn auth" onClick={ this.logoutClick }>Logout</Button> 
+                  }
+                }
+                else {
+                  buttonBar = <Button type="submit" className="btn modal-btn auth authorize">Authorize</Button>
+                }
+                  
+
+                return (
+                  <div key={`${name}-jump`}>
+                    { authEl }                    
+                    <div className="auth-btn-wrapper"> { buttonBar }</div>
+                  </div>
+                )
+
               }).toArray()
             }
-            <div className="auth-btn-wrapper">
-              {
-                nonOauthDefinitions.size === authorizedAuth.size ? <Button className="btn modal-btn auth" onClick={ this.logoutClick }>Logout</Button>
-              : <Button type="submit" className="btn modal-btn auth authorize">Authorize</Button>
-              }
-            </div>
+
           </form>
         }
 
