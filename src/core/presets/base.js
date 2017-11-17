@@ -22,6 +22,9 @@ import AuthItem from "core/components/auth/auth-item"
 import AuthError from "core/components/auth/error"
 import ApiKeyAuth from "core/components/auth/api-key-auth"
 import BasicAuth from "core/components/auth/basic-auth"
+import BcGwaApiKeyAuth from "core/components/auth/bc-gwa-api-key-auth"
+import GwaAuthorizeBtn from "core/components/auth/gwa-authorize-btn"
+import GwaAuthorizationPopup from "core/components/auth/gwa-authorization-popup"
 import Oauth2 from "core/components/auth/oauth2"
 import Clear from "core/components/clear"
 import LiveResponse from "core/components/live-response"
@@ -78,6 +81,9 @@ export default function() {
       oauth2: Oauth2,
       apiKeyAuth: ApiKeyAuth,
       basicAuth: BasicAuth,
+      bcGwaApiKeyAuth: BcGwaApiKeyAuth,
+      gwaAuthorizeBtn: GwaAuthorizeBtn,
+      gwaAuthorizationPopup: GwaAuthorizationPopup,
       clear: Clear,
       liveResponse: LiveResponse,
       info: Info,

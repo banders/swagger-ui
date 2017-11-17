@@ -1,0 +1,70 @@
+import React, { PropTypes } from "react"
+
+export default class BcGwaApiKeyAuth extends React.Component {
+  static propTypes = {
+    authorized: PropTypes.object,
+    getComponent: PropTypes.func.isRequired,
+    errSelectors: PropTypes.object.isRequired,
+    specSelectors: PropTypes.object.isRequired,
+    schema: PropTypes.object.isRequired,
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func,
+    authorizeState: PropTypes.func
+  }
+
+  constructor(props, context) {
+    super(props, context)
+    
+    //listen for GWA message
+    window.addEventListener('message', this.gwaMessageCallback.bind(this));
+  }
+
+  gwaMessageCallback(message) {
+    this.setKey(message.data);
+  }
+
+  setKey(key) {
+    let { authActions, submitAuth } = this.props
+
+    let apiKey = { apikey: { name: "apikey", schema: { type: "apiKey", in: "header", name: "apikey"}, value: key}}
+    authActions.authorize(apiKey)
+    submitAuth()
+  }
+
+  componentWillMount() {
+
+  }
+
+  componentWillUnmount() {
+
+  }
+
+  render() {
+    let { schema, getComponent, errSelectors, specSelectors, name } = this.props
+    const Input = getComponent("Input")
+    const Row = getComponent("Row")
+    const Col = getComponent("Col")
+    const AuthError = getComponent("authError")
+    const Markdown = getComponent( "Markdown" )
+    const JumpToPath = getComponent("JumpToPath", true)
+    let errors = errSelectors.allErrors().filter( err => err.get("authId") === name)
+
+    let info = specSelectors.info()
+    let contact = info.get("contact")
+    let contactName = contact.get("name")
+    let contactUrl = contact.get("url")
+    let contactEmail = contact.get("email")
+
+    let iframeStyle = {
+      width: "100%",
+      height: "400px"
+    }
+
+    return (
+      <div>
+        <iframe src="https://gwa.apps.gov.bc.ca/ui/apiKeys?appName=API%20Console&appSendMessage=true&contentOnly=true" style={iframeStyle} frameBorder="0" />
+      </div>
+    )
+
+  }
+}
