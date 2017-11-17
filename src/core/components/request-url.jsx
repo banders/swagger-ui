@@ -43,9 +43,8 @@ export default class RequestUrl extends React.Component {
         <div className="copy-paste">
           <textarea ref='content' onFocus={this.handleFocus} className="request-url" style={{ whiteSpace: "normal" }} value={ request.get("url") }></textarea>
         </div>
-        <div style={ buttonDivStyle }>
-          <Button onClick={ (e) => this.copyRequestUrl(e) } className={ "btn-copy" } data-clipboard-target="#request-url" title={ "Copy Request URL" }>Copy Request URL</Button>
-          <Button onClick={ (e) => this.openRequestUrl(e, request.get("url")) } title={ "Open Request URL" }>Open Request URL</Button>
+        <div class="btn-group" style={ buttonDivStyle }>
+          <Button className="btn" onClick={ (e) => this.openRequestUrl(e, request.get("url")) } title={ "Open Request URL" }>Open Request URL</Button>
         </div>
       </div>
     )

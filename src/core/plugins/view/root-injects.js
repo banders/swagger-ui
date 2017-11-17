@@ -58,18 +58,17 @@ export const makeMappedContainer = (getSystem, getStore, memGetComponent, getCom
 
 }
 
-export const render = (getSystem, getStore, getComponent, getComponents, dom) => {
-  let domNode = document.querySelector(dom)
+export const render = (getSystem, getStore, getComponent, getComponents, domNode) => {
   let App = (getComponent(getSystem, getStore, getComponents, "App", "root"))
   ReactDOM.render(( <App/> ), domNode)
 }
 
 // Render try/catch wrapper
-const createClass = component => React.createClass({
+const createClass = component => class extends Component {
   render() {
     return component(this.props)
   }
-})
+}
 
 const Fallback = ({ name }) => <div style={{ // eslint-disable-line react/prop-types
     padding: "1em",
