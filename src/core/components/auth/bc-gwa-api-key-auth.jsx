@@ -14,6 +14,16 @@ export default class BcGwaApiKeyAuth extends React.Component {
 
   constructor(props, context) {
     super(props, context)
+    let { name, schema } = this.props
+    let value = ""
+
+    this.state = {
+      name: name,
+      schema: schema,
+      value: value,
+      apiError: false
+    }
+
     
     //listen for GWA message
     window.addEventListener('message', this.gwaMessageCallback.bind(this));

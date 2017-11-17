@@ -1,0 +1,47 @@
+<div class='info' id='api_info'>
+  {{#if info}}
+  <div class="info_title">{{{sanitize info.title}}}</div>
+  <div class="info_description markdown">{{{sanitize info.description}}}</div>
+  
+  {{#if info.termsOfService}}
+  <div class='info_sub_title'><a target="_blank" href="{{{escape info.termsOfService}}}" data-sw-translate>Terms of Service</a></div>
+  <br/>
+  {{/if}}
+
+  {{#if info.license}}
+  <div><span class='info_sub_title'>License:</span> <a target="_blank" href='{{{escape info.license.url}}}'>{{{escape info.license.name}}}</a></div>
+  <br/>
+  {{/if}}
+  
+  {{#if info.contact}}
+  <div class="info_sub_title">Contact Information</div>
+  {{#if info.contact.name}}<div><span class='info_name' style="display: inline" data-sw-translate>Contact Name: </span> {{{escape info.contact.name}}}</div>{{/if}}
+  {{#if info.contact.email}}<div><span class='info_email'>Email: <a target="_parent" href="mailto:{{{escape info.contact.email}}}?subject={{{escape info.title}}}" data-sw-translate>{{{escape info.contact.email}}}</a></span></div>{{/if}}
+  {{#if info.contact.url}}<div><span class='info_url' data-sw-translate>Website: <a href="{{{escape info.contact.url}}}">{{{escape info.contact.url}}}</a></span></div>{{/if}}
+  <br/>
+  {{/if}}
+
+  {{#if externalDocs}}
+  <span class="info_sub_title">External Documentation:</span> <a href="{{{escape externalDocs.url}}}" target="_blank">{{{sanitize externalDocs.description}}}</a>  
+  <br/>
+  {{/if}}
+
+  {{/if}}
+</div>
+<div class='container' id='resources_container'>
+  <div class='authorize-wrapper'></div>
+
+  <ul id='resources'></ul>
+
+  <div class="footer">
+    <h4 style="color: #999">[ <span style="font-variant: small-caps">base url</span>: {{{escape basePath}}}
+    {{#if info.version}}
+  , <span style="font-variant: small-caps" data-sw-translate>api version</span>: {{{escape info.version}}}
+    {{/if}}]
+    {{#if validatorUrl}}
+    <span style="float:right"><a target="_blank" href="{{{escape validatorUrl}}}/debug?url={{{escape url}}}"><img id="validator" src="{{{escape validatorUrl}}}?url={{{escape url}}}"></a>
+    </span>
+    {{/if}}
+    </h4>
+    </div>
+</div>

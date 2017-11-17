@@ -32,6 +32,7 @@ import OnlineValidatorBadge from "core/components/online-validator-badge"
 import Operations from "core/components/operations"
 import Operation from "core/components/operation"
 import HighlightCode from "core/components/highlight-code"
+import RequestUrl from "core/components/request-url"
 import Responses from "core/components/responses"
 import Response from "core/components/response"
 import ResponseBody from "core/components/response-body"
@@ -58,6 +59,7 @@ import ArrayModel from "core/components/array-model"
 import PrimitiveModel from "core/components/primitive-model"
 import Property from "core/components/property"
 import TryItOutButton from "core/components/try-it-out-button"
+import TryExampleButton from "core/components/try-example-button"
 import VersionStamp from "core/components/version-stamp"
 
 import Markdown from "core/components/providers/markdown"
@@ -91,6 +93,7 @@ export default function() {
       operations: Operations,
       operation: Operation,
       highlightCode: HighlightCode,
+      requestUrl: RequestUrl,
       responses: Responses,
       response: Response,
       responseBody: ResponseBody,
@@ -116,6 +119,7 @@ export default function() {
       PrimitiveModel,
       Property,
       TryItOutButton,
+      TryExampleButton,
       Markdown,
       BaseLayout,
       VersionStamp

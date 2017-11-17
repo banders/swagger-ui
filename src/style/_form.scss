@@ -119,7 +119,7 @@ textarea
         border: 2px solid $form-textarea-focus-border-color;
     }
 
-    &.curl
+    &.curl,&.request-url
     {
         font-size: 12px;
 
