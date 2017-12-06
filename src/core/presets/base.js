@@ -23,6 +23,7 @@ import ApiKeyAuth from "core/components/auth/api-key-auth"
 import BasicAuth from "core/components/auth/basic-auth"
 import BcGwaApiKeyAuth from "core/components/auth/bc-gwa-api-key-auth"
 import GwaAuthorizeBtn from "core/components/auth/gwa-authorize-btn"
+import GwaManageKeysBtn from "core/components/auth/gwa-manage-keys-btn"
 import GwaAuthorizationPopup from "core/components/auth/gwa-authorization-popup"
 import Oauth2 from "core/components/auth/oauth2"
 import Clear from "core/components/clear"
@@ -81,6 +82,7 @@ export default function() {
       basicAuth: BasicAuth,
       bcGwaApiKeyAuth: BcGwaApiKeyAuth,
       gwaAuthorizeBtn: GwaAuthorizeBtn,
+      gwaManageKeysBtn: GwaManageKeysBtn,
       gwaAuthorizationPopup: GwaAuthorizationPopup,
       clear: Clear,
       liveResponse: LiveResponse,
