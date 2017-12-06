@@ -9,6 +9,8 @@
     position: absolute;
 
     right: 0px;
+
+    margin-right: 20px;
 }
 
 .auth-btn-wrapper
@@ -30,11 +32,8 @@
 
     .authorize
     {
-        padding-right: 20px;
         width: -moz-max-content;
     }
-
-    padding-right: 20px;
 }
 
 .auth-container
