@@ -60,6 +60,7 @@ import ArrayModel from "core/components/array-model"
 import PrimitiveModel from "core/components/primitive-model"
 import Property from "core/components/property"
 import TryItOutButton from "core/components/try-it-out-button"
+import TryExampleButton from "core/components/try-example-button"
 import VersionStamp from "core/components/version-stamp"
 
 import Markdown from "core/components/providers/markdown"
@@ -120,6 +121,7 @@ export default function() {
       PrimitiveModel,
       Property,
       TryItOutButton,
+      TryExampleButton,
       Markdown,
       BaseLayout,
       VersionStamp

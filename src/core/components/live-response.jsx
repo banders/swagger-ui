@@ -61,6 +61,7 @@ export default class LiveResponse extends React.Component {
 
     return (
       <div>
+
         { request && <Curl request={ request }/> }
         { request && <RequestUrl request={ request } getComponent={ getComponent } /> }
 
