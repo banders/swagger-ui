@@ -2,7 +2,7 @@ import React, { PropTypes } from "react"
 
 export default class RequestUrl extends React.Component {
   static propTypes = {
-    request: PropTypes.object.isRequired,
+    url: PropTypes.string.isRequired,
     getComponent: PropTypes.func.isRequired
   }
 
@@ -28,23 +28,22 @@ export default class RequestUrl extends React.Component {
   }
 
   render() {
-    let { request, getComponent } = this.props
+    let { url, getComponent } = this.props
 
     const buttonDivStyle = {
       float: 'right',
       marginTop: '5px'
     }
     const Button = getComponent("Button")
-    const TextArea = getComponent("TextArea")
 
     return (
       <div>
         <h4>Request URL</h4>
         <div className="copy-paste">
-          <textarea ref='content' onFocus={this.handleFocus} className="request-url" style={{ whiteSpace: "normal" }} value={ request.get("url") }></textarea>
+          <textarea ref='content' onFocus={this.handleFocus} className="request-url" style={{ whiteSpace: "normal" }} value={ url }></textarea>
         </div>
         <div class="btn-group" style={ buttonDivStyle }>
-          <Button className="btn" onClick={ (e) => this.openRequestUrl(e, request.get("url")) } title={ "Open Request URL" }>Open Request URL</Button>
+          <Button className="btn" onClick={ (e) => this.openRequestUrl(e, url) } title={ "Open Request URL" }>Open Request URL</Button>
         </div>
       </div>
     )
