@@ -19,7 +19,13 @@ describe("<ObjectModel />", function() {
     }
     const props = {
       getComponent: c => components[c],
+      getConfigs: () => {
+        return {
+          showExtensions: true
+        }
+      },
       isRef : false,
+      specPath: [],
       schema: Immutable.fromJS(
         {
           "properties": {

@@ -43,7 +43,11 @@ export default class ResponseBody extends React.Component {
 
       // Image
     } else if (/^image\//i.test(contentType)) {
-      bodyEl = <img style={{ maxWidth: "100%" }} src={ window.URL.createObjectURL(content) } />
+      if(contentType.includes("svg")) {
+        bodyEl = <div> { content } </div>
+      } else {
+        bodyEl = <img style={{ maxWidth: "100%" }} src={ window.URL.createObjectURL(content) } />
+      }
 
       // Audio
     } else if (/^audio\//i.test(contentType)) {
@@ -56,9 +60,6 @@ export default class ResponseBody extends React.Component {
       (headers["content-disposition"] && (/attachment/i).test(headers["content-disposition"])) ||
       (headers["Content-Description"] && (/File Transfer/i).test(headers["Content-Description"])) ||
       (headers["content-description"] && (/File Transfer/i).test(headers["content-description"]))) {
-
-      let contentLength = headers["content-length"] || headers["Content-Length"]
-      if ( !(+contentLength) ) return null
 
       const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
 
